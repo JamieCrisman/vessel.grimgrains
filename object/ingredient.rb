@@ -61,4 +61,9 @@ class Ingredient
 	      <content class='image'>#{image}</content>
 	      <content class='description'>
 	        <h1>#{name}</h1>
-	        <p
+	        <p>#{definition}</p>
+	      </content>
+	    </content>"
+	end
+
+end

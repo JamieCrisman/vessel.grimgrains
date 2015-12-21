@@ -110,4 +110,5 @@ content.banner { margin-bottom: 30px; text-align: center; margin-top:15px;}
 
 content.footer { font-size:12px;padding:30px; background:#000; color:#fff; margin-top:60px; text-align: center; color:#555;}
 content.footer a { color:#fff;}
-content.footer a:hover { text-decoration: underline; 
+content.footer a:hover { text-decoration: underline; }
+

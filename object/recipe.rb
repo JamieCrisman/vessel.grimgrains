@@ -258,4 +258,7 @@ class Recipe
 	end
 
 	def template_pinterest
-		retu
+		return '<a href="//www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" ><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>'
+	end
+
+end

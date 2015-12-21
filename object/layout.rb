@@ -215,7 +215,7 @@ class Layouts
 
     html = ""
 
-    currentPage = @search.to_i
+    currentPage = $page.query.to_i
 
     if currentPage == 0 then currentPage = 1 end
     perPage = 10
@@ -228,3 +228,18 @@ class Layouts
       html += timelineArray[count].template_preview
       count += 1
     end
+
+    # Pagination
+
+    html += "<content class='pagination'>"
+    html += currentPage != 1 ? "<a href='/"+(currentPage-1).to_s+"' class='left'>Previous Page</a>" : ""
+    html += "<a href='/"+(currentPage+1).to_s+"' class='right'>Next Page</a>"
+    html += "<hr />"
+    html += "</content>"
+
+    return html
+
+  end
+
+end
+

@@ -13,6 +13,12 @@ class Page
 
 	end
 
+	def query
+		
+		return @search
+
+	end
+
 	def title
 
 		return @search
@@ -217,4 +223,11 @@ class Page
 	    similarOrdered = similarPoints.sort_by {|_key, value| value}.reverse
 	    array = []
 	    similarOrdered.each do |id,value|
-	    	array.push(rec
+	    	array.push(recipeWithId(id))
+	    end
+
+	    return array
+
+	end
+
+end

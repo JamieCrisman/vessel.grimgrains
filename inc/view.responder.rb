@@ -26,9 +26,9 @@ require_relative "../object/ingredient.rb"
 require_relative "../object/color.rb"
 require_relative "../object/custom.rb"
 require_relative "../object/blog.rb"
+require_relative "../object/layout.rb"
 
-require_relative "system.layout.rb"
-require_relative "layout.modules.rb"
+require_relative "view.modules.rb"
 
 #----------------
 # Setup
@@ -67,7 +67,7 @@ puts "
 	<link rel='stylesheet'           type='text/css'                 href='inc/style.main.css?v=1' />
 	<script 														 src='inc/jquery.main.js?v=1'></script>
 
-	<title>Grimgrains | Unknown</title>
+	<title>Grimgrains | #{$page.title}</title>
   
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -96,4 +96,6 @@ rescue Exception
 	errorCleaned = error.to_s.gsub(", ","<br />").gsub("`","<b>").gsub("'","</b>").gsub("\"","").gsub("/var/www/wiki.xxiivv/public_html/","")
 	errorCleaned = errorCleaned.gsub("[","\n").gsub("]","")
 
-	puts "<pre><b>Error</b>     "+$!.to_s.gsub("`","<b>").gsub("'","</b>")+"<br/><b>Location</b>  "+errorCleaned+"<br /><b>Report</b>    Please, report this error to <a href='https://twitter.com/aliceffekt'>@aliceffekt</a><br /><br
+	puts "<pre><b>Error</b>     "+$!.to_s.gsub("`","<b>").gsub("'","</b>")+"<br/><b>Location</b>  "+errorCleaned+"<br /><b>Report</b>    Please, report this error to <a href='https://twitter.com/aliceffekt'>@aliceffekt</a><br /><br />CURRENTLY UPDATING XXIIVV, COME BACK SOON</pre>"
+
+end

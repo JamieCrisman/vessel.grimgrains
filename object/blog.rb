@@ -38,3 +38,9 @@ class Blog
 		return @data[3]
 
 	end
+
+	def template
+		return "missing blog template"
+	end
+
+end

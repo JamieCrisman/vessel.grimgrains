@@ -1,146 +1,12 @@
 #!/bin/env ruby
 # encoding: utf-8
+
 class Layouts
 
-  def initialize(data)
-
-    @search     = data["search"].force_encoding("UTF-8")
-    @lexicon    = data["lexicon"]
-    @recipes    = data["recipes"]
-    @pages      = data["pages"]
-    @blog       = data["blog"]
-
+  def initialize
   end
 
-  #----------------
-  # Layout View
-  #----------------
-
-  def homeView
-
-    html = ""
-
-    currentPage = @search[4,4].to_i
-
-    if currentPage == 0 then currentPage = 1 end
-    perPage = 6
-
-    from = (currentPage * perPage) - perPage
-    to = from+6
-
-    count = 0
-    @recipes.sort.reverse.each do |id,recipe|
-
-      if recipe['isActive'].to_i == 0 then next end
-
-      count += 1
-
-      if count > from && count < to+1
-        html += formatRecipeOverview(recipe)
-        if count % 6 == 0 then html += formatSimilarRecipes(recipe) end
-      end
-
-    end
-
-    # Pagination
-
-    html += "<content class='pagination'>"
-    if currentPage != 1
-      html += "<a href='/page"+(currentPage-1).to_s+"' class='left'>Previous Page</a>"
-    end
-    if currentPage * perPage < count
-      html += "<a href='/page"+(currentPage+1).to_s+"' class='right'>Next Page</a>"
-    end
-    html += "<hr />"
-    html += "</content>"
-
-    return html
-
-  end
-
-  def lexiconView
-
-    html = ""
-
-    imageFile = "img/ingredients/"+@search.downcase.gsub(" ",".")+".png"
-
-    if File.exist?(imageFile)
-      html += "<img src='/"+imageFile+"'/>"
-    end
-
-    html += "<h1>"+@search+"</h1>"
-    html += "<p>"+@lexicon[@search.downcase]['definition'].to_s+"</p>"
-    
-    @recipes.each do |id,recipe|
-      if recipe['ingredients'].to_s.downcase.include?(@search.downcase)
-        html += formatRecipeOverview(recipe)
-      end
-    end
-
-    return "<content class='lexicon'>"+html+"</content>"
-
-  end
-
-  def pageView
-    
-    html = ""
-    
-    if !@pages[@search.downcase] then return "Something went wrong" end
-
-    html += @pages[@search.downcase]["content"]
-    
-    return html
-    
-  end
-
-  def searchView
-
-    html = ""
-
-    html += "<h1>#"+@search+"</h1>"
-
-    if @pages[@search.downcase].to_s != ""
-      html += "<p>"+@pages[@search.downcase]['content'].to_s+"</p>"
-    else
-      html += "<p>This page shows the recipies including \""+@search+"\".</p>"
-    end
-
-    needle = @search.downcase
-    results = {}
-
-    @recipes.each do |id,recipe|
-
-    	if recipe['isActive'].to_i != 1 then next end
-		if !results[recipe['id'].to_i] then results[recipe['id'].to_i] = 0 end
-
-		if recipe['title'].to_s.downcase.include?(needle) then results[recipe['id'].to_i] += 5 end
-		if recipe['tags'].to_s.downcase.include?(needle) then results[recipe['id'].to_i] += 4 end
-		if recipe['ingredients'].to_s.downcase.include?(needle) then results[recipe['id'].to_i] += 3 end
-		if recipe['instructions'].to_s.downcase.include?(needle) then results[recipe['id'].to_i] += 2 end
-		if recipe['description'].to_s.downcase.include?(needle) then results[recipe['id'].to_i] += 1 end
-
-    end
-
-    # Ingredients by colour
-
-    @lexicon.each do |id,ingredient|
-      if ingredient['colour'].to_s.downcase != @search.to_s.downcase then next end
-      html += formatIngredient(ingredient['term'],"")
-    end
-
-    count = 0
-    results.sort_by {|_key, value| value}.reverse.each do |k,v|
-    	if v == 0 then next end
-    	html += formatRecipeOverview(@recipes[k])
-    	count += 1
-    	if count > 10 then break end
-    end
-
-    return "<content class='lexicon'>"+html+"</content>"
-
-  end
-
-  def sideView
+  def sidebar
 
     html = ""
 
@@ -148,8 +14,8 @@ class Layouts
 
     html += formatSidebarSocial
     html += "<center style='margin-bottom:30px'>Dark plant-based and nut-free cookery.</center>"
-    html += formatSidebarMenu
-    html += formatColoursList
+    html += sidebar_menu
+    html += sidebar_colors
     html += mailinglist
     html += formatBanner
     html += widgetInstagram
@@ -160,34 +26,85 @@ class Layouts
 
   end
 
-  def listView
+  def sidebar_colors
 
     html = ""
-    if @pages[@search.downcase].to_s != ""
-      html += "<p>"+@pages[@search.downcase]['content'].to_s+"</p>"
+    array = []
+
+    $page.ingredients.each do |ingredient|
+      if !ingredient.color then next end
+      array.push(ingredient.color.value)
     end
 
-    @lexicon.sort.each do |id,ingredient|
-      html += formatIngredient(ingredient['term'],"")
+    html += "<h1>Eat by color</h1>"
+
+    array.uniq.sort.each do |k,v|
+      html += "<a style='background:#"+k.to_s+"' href='/"+k.to_s+"'></a>"
     end
+
+    return "<content class='colors'>"+html+"</content>"
+
+  end
+
+  def sidebar_menu
+
+    html = ""
+
+    # Gather Tags
+    tags = {}
+    $page.recipes.each do |recipe|
+      recipe.tags.each do |tag|
+        tags[tag] = tags[tag].to_i + 1
+      end
+    end
+
+    html += "<ul class='menu'>"
+    html += "<li class='head'>Nutrition facts</li>"
+
+    $page.customs.each do |custom|
+      if !custom.isMenu then next end
+      html += "<li class='subs'><a href='/#{custom.url}'>#{custom.title}</a></li>"
+    end
+
+    limit = 0
+    tags.sort_by {|_key, value| value}.reverse.each do |k,v|
+      if limit > 5 then break end
+      html += "<li><a href='/"+k+"'>#"+k+"<span class='right'>"+v.to_s+"%</span></a></li>"
+      limit += 1
+    end
+    html += "<li class='search'><input class='search' placeholder='#Search'/></li>"
+    html += "</ul>"
 
     return html
 
   end
 
-  def blogView
+  def formatBanner
 
-    html = ""
-
-    @blog.each do |k,v|
-      html += formatBlog(v)
+    $page.customs.each do |custom|
+      if !custom.isPromoted then next end
+      return "<content class='banner'><a href='/#{custom.url}'><img src='/img/interface/banners/#{custom.file}.png'/></a></content>"
+      break
     end
-
-    return "<content class='blog'>"+html+"</content>"
+    return "Banner Error: Nothing promoted"
 
   end
 
-  def footerView
+  def formatSidebarSocial
+
+    html = ""
+
+    html += "<a href='https://www.facebook.com/grimgrains'><img src='img/interface/social/facebook.png'/></a>"
+    html += "<a href='http://grimgrains.tumblr.com'><img src='img/interface/social/tumblr.png'/></a>"
+    html += "<a href='https://twitter.com/grimgrains'><img src='img/interface/social/twitter.png'/></a>"
+    html += "<a href='http://www.pinterest.com/rekkabellum/'><img src='img/interface/social/pinterest.png'/></a>"
+    html += "<a href='http://www.instagram.com/grimgrains/'><img src='img/interface/social/instagram.png'/></a>"
+
+    return "<content class='social'>"+html+"</content>"
+
+  end
+
+  def footer
 
     html = ""
 
@@ -198,32 +115,118 @@ class Layouts
   def view
 
     html = ""
-    
-    if @lexicon[@search.downcase]
-      html = lexiconView
-    elsif @search == "Home" || @search[0,4].downcase == "page"
-      html = homeView
-    elsif @search == "Rejects"
-      html = blogView
-    elsif @search == "About"
-      html = pageView
-    elsif @search == "Shop"
-      html = pageView
-      require_relative "page.shop.rb"       # system | database
-      html += shopView
-    elsif isRecipe(@search)
-      html = formatRecipe(isRecipe(@search))
-      html += commentDisqus
-    elsif isBlog(@search)
-      html = formatBlog(isBlog(@search))
-      html += commentDisqus
-    elsif @search == "Ingredients list"
-      html = listView
+
+    if $page.isRecipe
+      html = recipe($page.isRecipe)
+    elsif $page.isIngredient
+      html = ingredient($page.isIngredient)
+    elsif $page.isColor
+      html = color($page.isColor)
+    elsif $page.isTag
+      html = tag($page.isTag)
+    elsif $page.isCustom
+      html = custom($page.isCustom)
+    elsif $page.isBlog
+      html = custom($page.isBlog)
     else
-      html = searchView
+      html = timeline($page.timeline)
     end
 
-    return "<wrapper style='min-height:900px'>"+sideView.force_encoding("utf-8")+"<core>"+html.force_encoding("utf-8")+"</core><hr /></wrapper>"+footerView.force_encoding("utf-8")
+    return "<wrapper style='min-height:900px'>"+sidebar.force_encoding("utf-8")+"<core>"+html.force_encoding("utf-8")+"</core><hr /></wrapper>"+footer.force_encoding("utf-8")
   end
 
-end
+  def recipe recipeObject
+
+    html =  ""
+    html += "<div itemscope itemtype='http://schema.org/Recipe'>"
+    html += recipeObject.template_overview 
+    html += recipeObject.template_ingredients
+    html += recipeObject.template_instructions 
+    html += recipeObject.template_tags 
+    html += commentDisqus
+    similarRecipes = $page.similarRecipesToId($page.recipe.id)
+    html += "<content class='similar'>"+similarRecipes.first.template_similar+" "+similarRecipes[1].template_similar+"</content>"
+    html += "</div>"
+
+  end
+
+  def ingredient ingredientObject
+
+    html = ""
+
+    assocRecipes = $page.recipesWithIngredient(ingredientObject)
+
+    html += ingredientObject.template_badge
+    if assocRecipes.length > 0 then html += "<h1>Found #{assocRecipes.length} recipes with #{ingredientObject.name}</h1>" end
+    count = 0
+    assocRecipes.each do |recipe|
+      if count > 10 then break end
+      html += recipe.template_preview
+      count += 1
+    end
+    return "<content class='ingredients'>"+html+"</content>"
+
+  end
+
+  def color colorObject
+
+    html = "<h1 style='color:##{colorObject.value}'>Recipes</h1>"
+    assocRecipes = $page.recipesWithColor(colorObject)
+    count = 0
+    assocRecipes.each do |recipe|
+      if count > 10 then break end
+      html += recipe.template_preview
+      count += 1
+    end
+    return html
+    
+  end
+
+  def tag tagString
+
+    html = "<h1>#{tagString} Recipes</h1>"
+    assocRecipes = $page.recipesWithTag(tagString)
+    count = 0
+    assocRecipes.each do |recipe|
+      if count > 10 then break end
+      html += recipe.template_preview
+      count += 1
+    end
+    return html
+    
+  end
+
+  def custom customObject
+
+    return customObject.template
+    
+  end
+
+  def bog blogObject
+
+    return blogObject.template
+    
+  end
+
+  def timeline timelineArray
+
+    html = ""
+
+    currentPage = @search.to_i
+
+    if currentPage == 0 then currentPage = 1 end
+    perPage = 10
+
+    from = (currentPage * perPage) - perPage
+    to = from+perPage
+
+    count = from
+    while count < to && timelineArray[count]
+      html += timelineArray[count].template_preview
+      count += 1
+    end
+
+    # Pagination
+
+    html += "<content class='pagination'>"
+    html += cur

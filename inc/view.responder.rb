@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 begin
 #----------------
 # Init
@@ -13,14 +16,19 @@ if @searchRaw.include? ':'
 end
 
 # Imports
-require "mysql"   					    # core | mysql
+require "mysql"
 
 # Core
-require_relative "../../envr/database.rb"      	# system | database
-require_relative "system.functions.rb"      	# system | database
-require_relative "system.layout.rb"      	# system | database
-require_relative "system.templates.rb"      	# system | database
-require_relative "layout.modules.rb"      	# system | database
+require_relative "../../envr/database.rb"
+
+require_relative "../object/page.rb"
+require_relative "../object/ingredient.rb"
+require_relative "../object/color.rb"
+require_relative "../object/custom.rb"
+require_relative "../object/blog.rb"
+
+require_relative "system.layout.rb"
+require_relative "layout.modules.rb"
 
 #----------------
 # Setup
@@ -31,20 +39,14 @@ db.connect
 
 data = {
   "search"  => @searchRaw,
-  "lexicon" => db.lexicon,
+  "ingredients" => db.ingredients,
   "recipes" => db.recipes,
-  "pages" => db.pages,
-  "blog" => db.blog
+  "customs" => db.customs,
+  "blogs" => db.blogs
 }
 
-layout    = Layouts.new(data)
-
-if data['recipes'][@search.to_i]
-	title = data['recipes'][@search.to_i]['title']
-else
-	title = @search
-end
-
+layout = Layouts.new()
+$page = Page.new(data)
 
 puts "
 <!DOCTYPE html>
@@ -65,7 +67,7 @@ puts "
 	<link rel='stylesheet'           type='text/css'                 href='inc/style.main.css?v=1' />
 	<script 														 src='inc/jquery.main.js?v=1'></script>
 
-	<title>Grimgrains | "+title+"</title>
+	<title>Grimgrains | Unknown</title>
   
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -94,6 +96,4 @@ rescue Exception
 	errorCleaned = error.to_s.gsub(", ","<br />").gsub("`","<b>").gsub("'","</b>").gsub("\"","").gsub("/var/www/wiki.xxiivv/public_html/","")
 	errorCleaned = errorCleaned.gsub("[","\n").gsub("]","")
 
-	puts "<pre><b>Error</b>     "+$!.to_s.gsub("`","<b>").gsub("'","</b>")+"<br/><b>Location</b>  "+errorCleaned+"<br /><b>Report</b>    Please, report this error to <a href='https://twitter.com/aliceffekt'>@aliceffekt</a><br /><br />CURRENTLY UPDATING XXIIVV, COME BACK SOON</pre>"
-
-end
+	puts "<pre><b>Error</b>     "+$!.to_s.gsub("`","<b>").gsub("'","</b>")+"<br/><b>Location</b>  "+errorCleaned+"<br /><b>Report</b>    Please, report this error to <a href='https://twitter.com/aliceffekt'>@aliceffekt</a><br /><br

@@ -24,6 +24,8 @@ p { margin-bottom: 30px}
 span.temperature { color: #d75014;}
 span.time { font-weight: bold}
 
+div#disqus_thread { margin-bottom: 30px }
+
 content { display: block; position: relative;}
 
 content.sidebar { width:300px;float: left}
@@ -40,16 +42,16 @@ content.social { text-align: center; margin-bottom:15px;}
 content.social a {}
 content.social a img { width:30px; border-radius: 4px; margin-right:2px; display: inline-block;}
 
-content.colours { margin-bottom: 30px; text-align: center; line-height: 15px}
-content.colours a { display: inline-block; width:25px; height:25px; border-radius: 25px; margin-right:2px; margin-bottom: 2px}
+content.sidebar content.colors { margin-bottom: 30px; text-align: center; line-height: 15px}
+content.sidebar content.colors a { display: inline-block; width:25px; height:25px; border-radius: 25px; margin-right:2px; margin-bottom: 2px}
 
 content.photo { margin-bottom: 15px;}
-content.photo img { max-width: 100%}
+content.photo img { max-width: 100%; border-radius: 3px}
 
 content.ingredients { margin-bottom:50px;}
 
 content.recipe content.description { font-size: 16px;}
-content.recipe content.description img { width:100%; margin-bottom:25px;}
+content.recipe content.description img { width:100%; margin-bottom:25px; border-radius: 3px}
 
 content.ingredient { width: 140px;height:130px;text-align: center;font-size:14px; display: inline-block;height:250px; position:relative;}
 content.ingredient { margin-bottom:15px;}
@@ -64,15 +66,25 @@ content.instructions ul { }
 content.instructions ul li { list-style-type: decimal;line-height: 28px;margin-bottom:15px;margin-left:30px}
 content.instructions small { display: block;font-size: 14px;line-height: 20px;}
 
+content.ingredient_badge { border:2px dashed #000;border-radius: 14px;padding:30px; margin-bottom: 30px}
+content.ingredient_badge .image { max-width: 180px; display:inline-block; vertical-align: top}
+content.ingredient_badge .description { max-width: 470px; display:inline-block; font-size:16px;}
+
+content.description.preview { margin-bottom:30px;}
+
 content.tags { margin-bottom: 50px}
 content.tags a { font-family: Monaco; font-size: 12px; font-weight: normal; display: inline-block; margin-right:15px; text-transform: capitalize;}
 
-content.lexicon dl { }
-content.lexicon dl dt { font-size:26px; line-height: 36px}
-content.lexicon dl dd { margin-bottom: 15px}
+content.ingredient dl { }
+content.ingredient dl dt { font-size:26px; line-height: 36px}
+content.ingredient dl dd { margin-bottom: 15px}
+
+content.colors { margin-bottom:15px;}
+content.colors a.color { width:10px; height:10px; display:block; border-radius: 20px; display: inline-block; margin-right:3px;}
+content.colors a.color:hover { width:6px; height:6px; border:2px solid black;}
 
 content.blog.widget { }
-content.blog.widget .photo { width: 100%;height: 230px;border-radius: 5px;background-size: cover; background-position: center center}
+content.blog.widget .photo { width: 100%;height: 230px;border-radius: 3px;background-size: cover; background-position: center center}
 content.blog.widget p { font-size:14px;line-height: 22px;}
 content.blog.widget p a { text-decoration: underline;}
 
@@ -98,5 +110,4 @@ content.banner { margin-bottom: 30px; text-align: center; margin-top:15px;}
 
 content.footer { font-size:12px;padding:30px; background:#000; color:#fff; margin-top:60px; text-align: center; color:#555;}
 content.footer a { color:#fff;}
-content.footer a:hover { text-decoration: underline; }
-
+content.footer a:hover { text-decoration: underline; 

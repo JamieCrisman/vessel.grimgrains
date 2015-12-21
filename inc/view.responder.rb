@@ -6,7 +6,7 @@ begin
 # Init
 #----------------
 
-@searchRaw = ARGV[0].to_s.gsub("+"," ")
+@searchRaw = ARGV[0].to_s.gsub("-"," ")
 @search = @searchRaw
 @module = @searchRaw
 

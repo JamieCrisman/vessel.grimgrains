@@ -24,8 +24,11 @@ class Recipe
 		array = []
 		@data[3].to_s.lines.each do |line|
 			ingredientName = line.split("|").first
+			ingredientQuantity = line.split("|").last
 			if $page.ingredientWithName(ingredientName)
-				array.push($page.ingredientWithName(ingredientName))
+				ingredient = $page.ingredientWithName(ingredientName)
+				ingredient.addQuantity(ingredientQuantity)
+				array.push(ingredient)
 			end
 		end
 		return array
@@ -141,7 +144,7 @@ class Recipe
 	# Custom
 
 	def url
-		return title.downcase.gsub(" ","+")
+		return title.downcase.gsub(" ","-")
 	end
 
 	# Templates
@@ -238,6 +241,7 @@ class Recipe
 
 		colors.each do |color|
 			if color.value.downcase == "ffffff" then next end
+			if color.value.downcase == "efefef" then next end
 			html += color.template
 		end
 
@@ -254,5 +258,4 @@ class Recipe
 	end
 
 	def template_pinterest
-		return '<a href="//www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" ><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>'
-	end
+		retu

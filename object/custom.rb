@@ -23,7 +23,7 @@ class Custom
 
 	def url
 
-		return title.downcase.gsub(" ","+")
+		return title.downcase.gsub(" ","-")
 
 	end
 

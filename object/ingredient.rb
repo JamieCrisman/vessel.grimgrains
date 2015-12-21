@@ -6,6 +6,7 @@ class Ingredient
 	def initialize data
 
 		@data = data
+		@quantity = ""
 
 	end
 
@@ -35,7 +36,7 @@ class Ingredient
 	end
 
 	def url
-		return name.downcase.gsub(" ","+")
+		return name.downcase.gsub(" ","-")
 	end
 
 	def template
@@ -46,9 +47,13 @@ class Ingredient
 	    else
 	      html += "<img src='/img/ingredients/missing.png'/>"
 	    end
-	    html += "<name itemprop='ingredients'>#{@name}<small>#{@quantity}</small></name>"
+	    html += "<name itemprop='ingredients'>#{name}<small>#{@quantity}</small></name>"
 	    return "<content class='ingredient'><a href='/#{url}'></a>"+html+"</content>"
 
+	end
+
+	def addQuantity data
+		@quantity = data
 	end
 
 	def template_badge
@@ -56,9 +61,4 @@ class Ingredient
 	      <content class='image'>#{image}</content>
 	      <content class='description'>
 	        <h1>#{name}</h1>
-	        <p>#{definition}</p>
-	      </content>
-	    </content>"
-	end
-
-end
+	        <p

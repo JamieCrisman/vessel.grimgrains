@@ -13,6 +13,11 @@ class Page
 
 	end
 
+	def title
+
+		return @search
+	end
+
 	def recipes
 
 		return @recipes
@@ -124,6 +129,16 @@ class Page
 
 	end
 
+	def ingredientsWithColor colorTarget
+
+		array = []
+		@ingredients.each do |ingredient|
+			if ingredient.color.value.downcase == colorTarget.value.downcase then return array.push(ingredient) end
+		end
+		return array
+
+	end
+
 	def recipesWithIngredient ingredientTarget
 
 		array = []
@@ -202,11 +217,4 @@ class Page
 	    similarOrdered = similarPoints.sort_by {|_key, value| value}.reverse
 	    array = []
 	    similarOrdered.each do |id,value|
-	    	array.push(recipeWithId(id))
-	    end
-
-	    return array
-
-	end
-
-end
+	    	array.push(rec

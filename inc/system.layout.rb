@@ -144,7 +144,7 @@ class Layouts
     html += recipeObject.template_instructions 
     html += recipeObject.template_tags 
     html += commentDisqus
-    similarRecipes = $page.similarRecipesToId($page.recipe.id)
+    similarRecipes = $page.similarRecipesToId($page.isRecipe.id)
     html += "<content class='similar'>"+similarRecipes.first.template_similar+" "+similarRecipes[1].template_similar+"</content>"
     html += "</div>"
 
@@ -171,6 +171,9 @@ class Layouts
   def color colorObject
 
     html = "<h1 style='color:##{colorObject.value}'>Recipes</h1>"
+
+    html += $page.ingredientsWithColor(colorObject).sample.template_badge
+
     assocRecipes = $page.recipesWithColor(colorObject)
     count = 0
     assocRecipes.each do |recipe|
@@ -225,8 +228,3 @@ class Layouts
       html += timelineArray[count].template_preview
       count += 1
     end
-
-    # Pagination
-
-    html += "<content class='pagination'>"
-    html += cur

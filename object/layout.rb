@@ -15,12 +15,8 @@ class Layouts
     html += formatSidebarSocial
     html += "<center style='margin-bottom:30px'>Dark plant-based and nut-free cookery.</center>"
     html += sidebar_menu
-    html += sidebar_colors
     html += mailinglist
-    html += formatBanner
-    html += widgetInstagram
-    html += googleAdSidebar3
-    
+    html += sidebar_colors
 
     return "<content class='sidebar'>"+html+"</content>"
 
@@ -35,8 +31,6 @@ class Layouts
       if !ingredient.color then next end
       array.push(ingredient.color.value)
     end
-
-    html += "<h1>Eat by color</h1>"
 
     array.uniq.sort.each do |k,v|
       html += "<a style='background:#"+k.to_s+"' href='/"+k.to_s+"'></a>"
@@ -128,8 +122,12 @@ class Layouts
       html = custom($page.isCustom)
     elsif $page.isBlog
       html = custom($page.isBlog)
-    else
+    elsif $page.isTimeline
       html = timeline($page.timeline)
+    elsif $page.isHome
+      html = timeline($page.timeline)
+    else
+      html = search($page.query)
     end
 
     return "<wrapper style='min-height:900px'>"+sidebar.force_encoding("utf-8")+"<core>"+html.force_encoding("utf-8")+"</core><hr /></wrapper>"+footer.force_encoding("utf-8")
@@ -238,6 +236,12 @@ class Layouts
     html += "</content>"
 
     return html
+
+  end
+
+  def search word
+
+    return "Searching for <i>#{word}</i>."
 
   end
 

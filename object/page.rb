@@ -115,6 +115,18 @@ class Page
 
 	end
 
+	def isTimeline
+
+		return ($page.query.to_i > 0) ? true : nil
+
+	end
+
+	def isHome
+
+		return (query == "Home") ? true : nil
+
+	end
+
 	# BLog
 
 	def recipeWithId id

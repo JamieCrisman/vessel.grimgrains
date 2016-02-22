@@ -37,7 +37,7 @@ class Recipe
 
 	def instructions
 
-		text = @data[4].to_s
+		text = @data[4].to_s.force_encoding("UTF-8")
 
 		# Add ingredients highlights
 

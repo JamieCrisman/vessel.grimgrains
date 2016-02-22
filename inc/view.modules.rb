@@ -52,13 +52,10 @@ class Layouts
   def widgetInstagram
    
     return '
-    <h1>Latest instagram snaps</h1><iframe src="http://snapwidget.com/in/?u=Z3JpbWdyYWluc3xpbnwxNDV8MnwyfHxub3w1fG5vbmV8b25TdGFydHx5ZXN8bm8=&ve=270814" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:300px; height:300px"></iframe>'  
+    <h1 class="center">Latest instagram snaps</h1><iframe src="http://snapwidget.com/in/?u=Z3JpbWdyYWluc3xpbnwxNDV8MnwyfHxub3w1fG5vbmV8b25TdGFydHx5ZXN8bm8=&ve=270814" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:300px; height:300px"></iframe>'  
     
   end
-  
-  
 
-  
   def donate
     
     return '
@@ -70,8 +67,7 @@ class Layouts
       #donate .indicates-required { margin-right:0px}
       
     </style>
-    
-
+  
     <div id="donate">
         <center><h1>Want to help?</h1>
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
@@ -90,16 +86,10 @@ class Layouts
 <br>
     <a href="http://grimgrains.com/donate">(Why donate?)</a> <img src="http://grimgrains.com/img/interface/pages/paypal.png">
     </form></center>
-
-  
-
-
     </div>
    '
     
   end
-  
-  
   
   def mailinglist
     
@@ -116,7 +106,7 @@ class Layouts
     <div id="mc_embed_signup">
     <form action="//grimgrains.us9.list-manage.com/subscribe/post?u=689cf3ea1e99d4680a274f6f0&amp;id=2db26af007" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
         <div id="mc_embed_signup_scroll">
-    	<center><h1>Subscribe to mailing list</h1></center>
+    <h1 class="center">Mailing list</h1>
     <div class="mc-field-group">
     	<input type="email" value="" name="EMAIL" placeholder="your_email@address.com" class="required email" id="mce-EMAIL" style="display: block;padding: 8px 5px;width:170px;float:left;border:1px solid #000;border-top-left-radius: 5px;border-bottom-left-radius: 5px; text-indent:10px">
       <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button" style="width: 88px;clear: none;border-radius: 0px;margin: 0px;line-height: 16px;font-size: 12px;border-bottom-right-radius: 5px;border-top-right-radius: 5px;background: #000">
@@ -151,7 +141,6 @@ class Layouts
     
   end
   
-    
   # Facebook
 
   def shareFacebookSDK

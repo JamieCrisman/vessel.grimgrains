@@ -7,6 +7,7 @@ class Ingredient
 
 		@data = data
 		@quantity = ""
+		@category = ""
 
 	end
 
@@ -54,6 +55,14 @@ class Ingredient
 
 	def addQuantity data
 		@quantity = data
+	end
+
+	def category
+		return @category
+	end
+
+	def addCategory data
+		@category = data
 	end
 
 	def template_badge

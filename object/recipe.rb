@@ -22,12 +22,16 @@ class Recipe
 	def ingredients
 
 		array = []
+		ingredientCategory = "main"
+
 		@data[3].to_s.lines.each do |line|
+			if line[0,1] == "=" then ingredientCategory = line.sub("=","") ; next end
 			ingredientName = line.split("|").first
 			ingredientQuantity = line.split("|").last
 			if $page.ingredientWithName(ingredientName)
 				ingredient = $page.ingredientWithName(ingredientName)
 				ingredient.addQuantity(ingredientQuantity)
+				ingredient.addCategory(ingredientCategory)
 				array.push(ingredient)
 			end
 		end
@@ -189,8 +193,16 @@ class Recipe
 	def template_ingredients
 
 		html = ""
-	  	ingredients.each do |ingredient|
-	  		html += ingredient.template
+		categories = {}
+		ingredients.each do |ingredient|
+			if !categories[ingredient.category] then categories[ingredient.category] = [] end
+			categories[ingredient.category].push(ingredient)
+	  	end
+	  	categories.each do |category,ingredients|
+	  		html += category == "main" ? "" : "<h3>#{category.capitalize}</h3>"
+	  		ingredients.each do |ingredient|
+	  			html += ingredient.template
+	  		end
 	  	end
 	  	return "<content class='ingredients'>"+html+"</content>"
 

@@ -106,15 +106,6 @@ class Page
 
 	end
 
-	def isBlog
-
-		@blogs.each do |blog|
-			if blog.title.downcase == @search.downcase then return blog end
-		end
-		return nil
-
-	end
-
 	def isTimeline
 
 		return ($page.query.to_i > 0) ? true : nil
@@ -127,7 +118,11 @@ class Page
 
 	end
 
-	# BLog
+	def isIngredientList
+
+		return (query.split(" ").first.downcase == "ingredients") ? true : nil
+
+	end
 
 	def recipeWithId id
 

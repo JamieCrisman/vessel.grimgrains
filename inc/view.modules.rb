@@ -96,7 +96,7 @@ class Layouts
     return '
     <link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
     <style type="text/css">
-    	#mc_embed_signup{background: #fff;border: #000000 dashed 2px;clear: left;font: 12px Helvetica,Arial,sans-serif;width: 300px;margin-bottom: 30px;border-radius: 6px}
+    	#mc_embed_signup{background: #fff;border: #000000 dashed 2px;clear: left;font: 12px Helvetica,Arial,sans-serif;width: 296px;margin-bottom: 30px;border-radius: 6px}
       #mc_embed_signup form { margin: 15px; padding:0px}
       #mc_embed_signup .mc-field-group { width:100%; margin-bottom:0px; min-height:0px}
       #mc_embed_signup .indicates-required { margin-right:0px}
@@ -108,7 +108,7 @@ class Layouts
         <div id="mc_embed_signup_scroll">
     <h1 class="center">Mailing list</h1>
     <div class="mc-field-group">
-    	<input type="email" value="" name="EMAIL" placeholder="your_email@address.com" class="required email" id="mce-EMAIL" style="display: block;padding: 8px 5px;width:170px;float:left;border:1px solid #000;border-top-left-radius: 5px;border-bottom-left-radius: 5px; text-indent:10px">
+    	<input type="email" value="" name="EMAIL" placeholder="your_email@address.com" class="required email" id="mce-EMAIL" style="display: block;padding: 8px 5px;width: 165px;float:left;border:1px solid #000;border-top-left-radius: 5px;border-bottom-left-radius: 5px; text-indent:10px">
       <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button" style="width: 88px;clear: none;border-radius: 0px;margin: 0px;line-height: 16px;font-size: 12px;border-bottom-right-radius: 5px;border-top-right-radius: 5px;background: #000">
     </div>
     	<div id="mce-responses" class="clear">

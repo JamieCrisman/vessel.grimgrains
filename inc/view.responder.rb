@@ -25,7 +25,6 @@ require_relative "../object/page.rb"
 require_relative "../object/ingredient.rb"
 require_relative "../object/color.rb"
 require_relative "../object/custom.rb"
-require_relative "../object/blog.rb"
 require_relative "../object/layout.rb"
 
 require_relative "view.modules.rb"
@@ -41,8 +40,7 @@ data = {
   "search"  => @searchRaw,
   "ingredients" => db.ingredients,
   "recipes" => db.recipes,
-  "customs" => db.customs,
-  "blogs" => db.blogs
+  "customs" => db.customs
 }
 
 layout = Layouts.new()

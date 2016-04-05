@@ -97,7 +97,7 @@ class Recipe
 	end
 
 	def description_short
-		return description.split("</p>").first+"<br /><a href='/#{url}'>Continue Reading..</a></p>"
+		return description.split("</p>").first.to_s+"<br /><a href='/#{url}'>Continue Reading..</a></p>"
 	end
 
 	def colors
@@ -124,6 +124,7 @@ class Recipe
 	def hasTag tagTarget
 
 		tags.each do |tag|
+			if !tag || !tagTarget then next end
 			if tag.downcase != tagTarget.downcase then next end
 			return true
 		end
@@ -229,8 +230,7 @@ class Recipe
 	    return "<content class='recipe'>
 	    	#{template_photo}
 	    	<h1 itemprop='name'><a href='/#{url}'>#{title}</a></h1>
-	    	#{template_colors}
-	    	<p>#{description_short}</p>
+	    	#{template_tags}
 	    </content>"
 
 	end

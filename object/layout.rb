@@ -56,7 +56,7 @@ class Layouts
     html += "<li class='head'>Nutrition facts</li>"
 
     $page.customs.each do |custom|
-      if !custom.isMenu then next end
+      if custom.isMenu.to_i < 1 then next end
       html += "<li class='subs'><a href='/#{custom.url}'>#{custom.title}</a></li>"
     end
 
@@ -102,7 +102,11 @@ class Layouts
 
     html = ""
 
-    return "<content class='footer'><a href='http://grimgrains.com'>GRIMGRAINS</a> © 2014 <a href='https://twitter.com/grimgrains'>Twitter</a> &bull; <a href='https://instagram.com/grimgrains'>Instagram</a> &bull; <a href='https://www.facebook.com/grimgrains'>Facebook</a> &bull; <a href='https://www.pinterest.com/rekkabellum/'>Pinterest</a></content>"
+    html += "<a href='http://patreon.com/100' class='hundredrabbits' target='_blank'><img src='img/interface/hundredrabbits.logo.alpha.png'/></a>"
+    html += "<a href='http://patreon.com/100' target='_blank'>Hundredrabbits</a>"
+    # html += "<div style='float:right; margin-top: 20px'><a href='http://grimgrains.com'>GRIMGRAINS</a> © 2014 <a href='https://twitter.com/grimgrains'>Twitter</a> &bull; <a href='https://instagram.com/grimgrains'>Instagram</a> &bull; <a href='https://www.facebook.com/grimgrains'>Facebook</a> &bull; <a href='https://www.pinterest.com/rekkabellum/'>Pinterest</a></div>"
+
+    return "<content class='footer'><div>#{html}</div></content>"
 
   end
 
@@ -112,16 +116,17 @@ class Layouts
 
     if $page.isRecipe
       html = recipe($page.isRecipe)
+    elsif $page.isIngredientList
+      html = ingredientsList
     elsif $page.isIngredient
       html = ingredient($page.isIngredient)
     elsif $page.isColor
       html = color($page.isColor)
-    elsif $page.isTag
-      html = tag($page.isTag)
     elsif $page.isCustom
       html = custom($page.isCustom)
-    elsif $page.isBlog
-      html = custom($page.isBlog)
+      html += tag($page.isTag)
+    elsif $page.isTag
+      html = tag($page.isTag)
     elsif $page.isTimeline
       html = timeline($page.timeline)
     elsif $page.isHome
@@ -189,24 +194,41 @@ class Layouts
     assocRecipes = $page.recipesWithTag(tagString)
     count = 0
     assocRecipes.each do |recipe|
+      if !recipe.isActive then next end
       if count > 10 then break end
       html += recipe.template_preview
       count += 1
     end
+    if count == 0 then return "" end
     return html
     
   end
 
   def custom customObject
 
-    return customObject.template
+
+    return "<h1>#{customObject.title}</h1>"+customObject.template
     
   end
 
-  def bog blogObject
+  def ingredientsList
 
-    return blogObject.template
-    
+    html = ""
+    sort_by_color = {}
+
+    $page.ingredients.each do |ingredient|
+      if !sort_by_color[ingredient.color.value] then sort_by_color[ingredient.color.value] = [] end
+      sort_by_color[ingredient.color.value].push(ingredient)
+    end
+
+    sort_by_color.sort.each do |color,ingredients|
+      ingredients.each do |ingredient|
+        html += ingredient.template
+      end
+    end
+
+    return html
+
   end
 
   def timeline timelineArray
@@ -241,7 +263,24 @@ class Layouts
 
   def search word
 
-    return "Searching for <i>#{word}</i>."
+    html = ""
+
+    results = []
+
+    $page.recipes.each do |recipe|
+      if recipe.isActive == false then next end
+      if recipe.title.downcase.include?(word.downcase) then results.push(recipe) ; next end
+    end
+
+    if results.length > 0
+      html += "<p>Searching #{$page.recipes.length} recipes for \"<b><i>#{word}</i></b>\", found #{results.length} matches:</p>"
+      results.each do |recipe|
+        html += "<a href='#{recipe.url}'>#{recipe.title}</a><br />"
+      end
+    else
+      html += "<p>Could not find any recipe with \"<b><i>#{word}</i></b>\".</p>"
+    end
+    return html
 
   end
 

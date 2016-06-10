@@ -148,7 +148,7 @@ class Layouts
     html += recipeObject.template_ingredients
     html += recipeObject.template_instructions 
     html += recipeObject.template_tags 
-    html += commentDisqus
+    # html += commentDisqus
     # similarRecipes = $page.similarRecipesToName($page.isRecipe.title)
     # if similarRecipes
     #   html += "<content class='similar'>"+similarRecipes.first.template_similar+" "+similarRecipes[1].template_similar+"</content>"

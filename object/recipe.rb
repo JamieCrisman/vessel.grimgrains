@@ -8,16 +8,12 @@ class Recipe
 		@data["NAME"] = name
 	end
 
-	def id
-		return @data[0].to_i
-	end
-
 	def title
 		return @data["NAME"].capitalize
 	end
 
 	def date
-		return @data[2]
+		return @data["DATE"]
 	end
 
 	def ingredients
@@ -25,7 +21,7 @@ class Recipe
 		array = []
 		ingredientCategory = "main"
 
-		@data[3].to_s.lines.each do |line|
+		@data["INGR"].to_s.lines.each do |line|
 			if line[0,1] == "=" then ingredientCategory = line.sub("=","") ; next end
 			ingredientName = line.split("|").first
 			ingredientQuantity = line.split("|").last
@@ -42,7 +38,7 @@ class Recipe
 
 	def instructions
 
-		text = @data[4].to_s.force_encoding("UTF-8")
+		text = @data["INST"].to_s.force_encoding("UTF-8")
 
 		# Add ingredients highlights
 
@@ -81,25 +77,19 @@ class Recipe
 	end
 
 	def tags
-		return @data[5].to_s.split("|")
+		return @data["TAGS"].to_s.split("|")
 	end
 
 	def duration
-		return @data[6].to_i
+		return @data["TIME"].to_i
 	end
 
 	def serving
-		return @data[7]
-	end
-
-	def isActive
-		return true
-		if @data[8].to_i == 1 then return true end
-		return false
+		return @data["SERV"]
 	end
 
 	def description
-		return @data[9].to_s.force_encoding("UTF-8")
+		return @data["DESC"].to_s.force_encoding("UTF-8")
 	end
 
 	def description_short
@@ -264,6 +254,7 @@ class Recipe
 	end
 
 	def template_photo
+		return "[PHOTO]"
 		return "<content class='photo'><a href='/#{url}'><img src='/img/recipes/#{id}.jpg' itemprop='image'/></a></content>"
 	end
 

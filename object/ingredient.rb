@@ -3,7 +3,7 @@
 
 class Ingredient
 
-	def initialize data
+	def initialize name,data
 
 		@data = data
 		@quantity = ""

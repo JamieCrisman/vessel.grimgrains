@@ -3,8 +3,9 @@
 
 class Recipe
 
-	def initialize data
+	def initialize name,data
 		@data = data
+		@data["NAME"] = name
 	end
 
 	def id
@@ -12,7 +13,8 @@ class Recipe
 	end
 
 	def title
-		return @data[1]
+		p @data["NAME"]
+		return @data["NAME"].to_s
 	end
 
 	def date

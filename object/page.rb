@@ -6,10 +6,15 @@ class Page
 	def initialize data
 
 		@search     = data["search"].force_encoding("UTF-8")
-	    @ingredients = data["ingredients"]
-	    @recipes    = data["recipes"]
+		@ingredients = {}
+	    data["ingredients"].each do |name,content|
+			@ingredients[name] = Ingredient.new(name,content)
+		end
+		@recipes = {}
+	    data["recipes"].each do |name,content|
+			@recipes[name] = Recipe.new(name,content)
+		end
 	    @customs    = data["customs"]
-	    @blogs       = data["blogs"]
 
 	end
 
@@ -51,7 +56,7 @@ class Page
 	def timeline
 
 		array = []
-		@recipes.reverse.each do |recipe|
+		@recipes.reverse.each do |name,recipe|
 			if recipe.isActive == false then next end
 			array.push(recipe)
 		end
@@ -63,8 +68,8 @@ class Page
 
 	def isRecipe
 
-		@recipes.each do |recipe|
-			if recipe.title.downcase == @search.downcase then return recipe end
+		@recipes.each do |name,recipe|
+			if name.like(@search) then return recipe end
 		end
 		return nil
 
@@ -72,8 +77,8 @@ class Page
 
 	def isIngredient
 
-		@ingredients.each do |ingredient|
-			if ingredient.name.downcase == @search.downcase then return ingredient end
+		@ingredients.each do |name,ingredient|
+			if name.like(@search) then return ingredient end
 		end
 		return nil
 
@@ -81,7 +86,7 @@ class Page
 
 	def isColor
 
-		@ingredients.each do |ingredient|
+		@ingredients.each do |name,ingredient|
 			if ingredient.color.value.downcase == @search.downcase then return ingredient.color end
 		end
 		return false
@@ -90,17 +95,8 @@ class Page
 
 	def isTag
 
-		@recipes.each do |recipe|
+		@recipes.each do |name,recipe|
 			if recipe.hasTag(@search) == true then return @search end
-		end
-		return nil
-
-	end
-
-	def isCustom
-
-		@customs.each do |custom|
-			if custom.title.downcase == @search.downcase then return custom end
 		end
 		return nil
 
@@ -135,7 +131,7 @@ class Page
 
 	def ingredientWithName nameTarget
 
-		@ingredients.each do |ingredient|
+		@ingredients.each do |name,ingredient|
 			if ingredient.name.downcase == nameTarget.downcase then return ingredient end
 		end
 		return nil
@@ -145,7 +141,7 @@ class Page
 	def ingredientsWithColor colorTarget
 
 		array = []
-		@ingredients.each do |ingredient|
+		@ingredients.each do |name,ingredient|
 			if ingredient.color.value.downcase == colorTarget.value.downcase then return array.push(ingredient) end
 		end
 		return array
@@ -155,7 +151,7 @@ class Page
 	def recipesWithIngredient ingredientTarget
 
 		array = []
-		@recipes.each do |recipe|
+		@recipes.each do |name,recipe|
 			if !recipe.hasIngredient(ingredientTarget) then next end
 			array.push(recipe)
 		end
@@ -166,7 +162,7 @@ class Page
 	def recipesWithTag tagTarget
 
 		array = []
-		@recipes.each do |recipe|
+		@recipes.each do |name,recipe|
 			if !recipe.hasTag(tagTarget) then next end
 			array.push(recipe)
 		end
@@ -177,7 +173,7 @@ class Page
 	def recipesWithColor colorTarget
 
 		array = []
-		@recipes.each do |recipe|
+		@recipes.each do |name,recipe|
 			if !recipe.hasColor(colorTarget) then next end
 			array.push(recipe)
 		end
@@ -203,7 +199,7 @@ class Page
 
 	    similarPoints = {}
 
-	    @recipes.each do |recipe|
+	    @recipes.each do |name,recipe|
 
 	    	if recipe.title == currentRecipe.title then next end
 	    	if recipe.isActive == false then next end

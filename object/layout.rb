@@ -149,8 +149,10 @@ class Layouts
     html += recipeObject.template_instructions 
     html += recipeObject.template_tags 
     html += commentDisqus
-    similarRecipes = $page.similarRecipesToId($page.isRecipe.id)
-    html += "<content class='similar'>"+similarRecipes.first.template_similar+" "+similarRecipes[1].template_similar+"</content>"
+    # similarRecipes = $page.similarRecipesToName($page.isRecipe.title)
+    # if similarRecipes
+    #   html += "<content class='similar'>"+similarRecipes.first.template_similar+" "+similarRecipes[1].template_similar+"</content>"
+    # end
     html += "</div>"
 
   end
@@ -270,13 +272,12 @@ class Layouts
     results = []
 
     $page.recipes.each do |name,recipe|
-      if recipe.isActive == false then next end
-      if recipe.title.downcase.include?(word.downcase) then results.push(recipe) ; next end
+      if name.downcase.include?(word.downcase) then results.push(recipe) end
     end
 
     if results.length > 0
       html += "<p>Searching #{$page.recipes.length} recipes for \"<b><i>#{word}</i></b>\", found #{results.length} matches:</p>"
-      results.each do |name,recipe|
+      results.each do |recipe|
         html += "<a href='#{recipe.url}'>#{recipe.title}</a><br />"
       end
     else

@@ -120,15 +120,6 @@ class Page
 
 	end
 
-	def recipeWithId id
-
-		@recipes.each do |recipe|
-			if recipe.id.to_i != id.to_i then next end 
-			return recipe
-		end
-
-	end
-
 	def ingredientWithName nameTarget
 
 		@ingredients.each do |name,ingredient|
@@ -181,11 +172,21 @@ class Page
 
 	end
 
-	def similarRecipesToId id
+	def recipeWithName target
+
+		@recipes.each do |name,recipe|
+			if !target.downcase.include?(name.downcase) then next end
+			return recipe
+		end
+		return nil
+
+	end
+
+	def similarRecipesToName name
 
 		keywords = {}
 
-		currentRecipe = recipeWithId(id)
+		currentRecipe = recipeWithName(query)
 
 	    currentRecipe.title.split(" ").each do |word|
 	    	keywords[word] = 0
@@ -226,7 +227,7 @@ class Page
 	    similarOrdered = similarPoints.sort_by {|_key, value| value}.reverse
 	    array = []
 	    similarOrdered.each do |id,value|
-	    	array.push(recipeWithId(id))
+	    	array.push(recipeWithName(query))
 	    end
 
 	    return array

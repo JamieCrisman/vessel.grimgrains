@@ -13,8 +13,7 @@ class Recipe
 	end
 
 	def title
-		p @data["NAME"]
-		return @data["NAME"].to_s
+		return @data["NAME"].capitalize
 	end
 
 	def date
@@ -94,6 +93,7 @@ class Recipe
 	end
 
 	def isActive
+		return true
 		if @data[8].to_i == 1 then return true end
 		return false
 	end

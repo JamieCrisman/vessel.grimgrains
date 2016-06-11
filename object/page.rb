@@ -56,8 +56,7 @@ class Page
 	def timeline
 
 		array = []
-		@recipes.reverse.each do |name,recipe|
-			if recipe.isActive == false then next end
+		@recipes.sort.reverse.each do |name,recipe|
 			array.push(recipe)
 		end
 		return array
@@ -110,13 +109,15 @@ class Page
 
 	def isHome
 
-		return (query == "Home") ? true : nil
+		puts 
+
+		return $page.query.like("home") ? true : nil
 
 	end
 
 	def isIngredientList
 
-		return (query.split(" ").first.downcase == "ingredients") ? true : nil
+		return $page.query.like("ingredients") ? true : nil
 
 	end
 

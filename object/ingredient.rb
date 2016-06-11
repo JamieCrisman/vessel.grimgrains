@@ -6,21 +6,22 @@ class Ingredient
 	def initialize name,data
 
 		@data = data
+		@data["NAME"] = name
 		@quantity = ""
 		@category = ""
 
 	end
 
 	def name
-		return @data[1].to_s
+		return @data["NAME"].downcase
 	end
 
 	def definition
-		return @data[2].to_s
+		return @data["BREF"]
 	end
 
 	def color
-		return Color.new(@data[3].to_s)
+		return Color.new(@data["TINT"].to_s)
 	end
 
 	def image

@@ -136,7 +136,19 @@ class Layouts
       html = search($page.query)
     end
 
-    return "<wrapper style='min-height:900px'>"+sidebar.force_encoding("utf-8")+"<core>"+html.force_encoding("utf-8")+"</core><hr /></wrapper>"+footer.force_encoding("utf-8")
+    return "<wrapper style='min-height:900px'>"+sidebar.force_encoding("utf-8")+"<core>
+
+
+
+    <!-- //////////////////////////////////////// --!>
+
+    "+html.force_encoding("utf-8")+"
+
+    <!-- //////////////////////////////////////// --!>
+
+
+
+    </core><hr /></wrapper>"+footer.force_encoding("utf-8")
 
   end
 
@@ -226,7 +238,7 @@ class Layouts
     end
 
     sort_by_color.sort.each do |color,ingredients|
-      ingredients.each do |name,ingredient|
+      ingredients.each do |ingredient|
         html += ingredient.template
       end
     end

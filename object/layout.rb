@@ -122,6 +122,8 @@ class Layouts
       html = recipe($page.isRecipe)
     elsif $page.isIngredientList
       html = ingredientsList
+    elsif $page.isCustom
+      html = view_custom
     elsif $page.isIngredient
       html = ingredient($page.isIngredient)
     elsif $page.isColor
@@ -298,6 +300,13 @@ class Layouts
     return html
 
   end
+
+  def view_custom
+
+    return $page.content_custom
+    
+  end
+
   def googleAnalytics
 
     return "

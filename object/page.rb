@@ -5,7 +5,7 @@ class Page
 
 	def initialize data
 
-		@search     = data["search"].force_encoding("UTF-8")
+		@search = data["search"].force_encoding("UTF-8")
 		@ingredients = {}
 	    data["ingredients"].each do |name,content|
 			@ingredients[name] = Ingredient.new(name,content)
@@ -14,7 +14,7 @@ class Page
 	    data["recipes"].each do |name,content|
 			@recipes[name] = Recipe.new(name,content)
 		end
-	    @customs    = data["customs"]
+	    @custom = data["custom"]
 
 	end
 
@@ -118,6 +118,18 @@ class Page
 	def isIngredientList
 
 		return $page.query.like("ingredients") ? true : nil
+
+	end
+
+	def isCustom
+
+		return @custom[$page.query.upcase] ? true : false
+
+	end
+
+	def content_custom
+
+		return "<p>"+@custom[$page.query.upcase]["BREF"]+"</p>"+@custom[$page.query.upcase]["LONG"].parse2
 
 	end
 

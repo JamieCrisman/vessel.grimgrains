@@ -216,21 +216,20 @@ class Page
 	    @recipes.each do |name,recipe|
 
 	    	if recipe.title == currentRecipe.title then next end
-	    	if recipe.isActive == false then next end
 
-	    	similarPoints[recipe.id] = 0
+	    	similarPoints[recipe.title] = 0
 
 	    	recipe.title.split(" ").each do |word|
 	    		if !keywords[word] then next end
-		    	similarPoints[recipe.id] += 4
+		    	similarPoints[recipe.title] += 4
 		    end
 	    	recipe.tags.each do |tag|
 	    		if !keywords[tag] then next end
-		    	similarPoints[recipe.id] += 2
+		    	similarPoints[recipe.title] += 2
 		    end
 	    	recipe.ingredients.each do |ingredient|
 	    		if !keywords[ingredient.name] then next end
-		    	similarPoints[recipe.id] += 1
+		    	similarPoints[recipe.title] += 1
 		    end
 
 	    end

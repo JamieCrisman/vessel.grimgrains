@@ -162,11 +162,11 @@ class Layouts
     html += recipeObject.template_ingredients
     html += recipeObject.template_instructions 
     html += recipeObject.template_tags 
-    # html += commentDisqus
-    # similarRecipes = $page.similarRecipesToName($page.isRecipe.title)
-    # if similarRecipes
-    #   html += "<content class='similar'>"+similarRecipes.first.template_similar+" "+similarRecipes[1].template_similar+"</content>"
-    # end
+    html += commentDisqus
+    similarRecipes = $page.similarRecipesToName($page.isRecipe.title)
+    if similarRecipes
+      html += "<content class='similar'>"+similarRecipes.first.template_similar+" "+similarRecipes[1].template_similar+"</content>"
+    end
     html += "</div>"
 
   end
@@ -212,7 +212,6 @@ class Layouts
     assocRecipes = $page.recipesWithTag(tagString)
     count = 0
     assocRecipes.each do |name,recipe|
-      if !recipe.isActive then next end
       if count > 10 then break end
       html += recipe.template_preview
       count += 1

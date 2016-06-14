@@ -21,14 +21,12 @@ class Recipe
 		array = []
 		ingredientCategory = "main"
 
-		@data["INGR"].to_s.lines.each do |line|
-			if line[0,1] == "=" then ingredientCategory = line.sub("=","") ; next end
-			ingredientName = line.split("|").first
-			ingredientQuantity = line.split("|").last
-			if $page.ingredientWithName(ingredientName)
-				ingredient = $page.ingredientWithName(ingredientName)
-				ingredient.addQuantity(ingredientQuantity)
-				ingredient.addCategory(ingredientCategory)
+		@data["INGR"].each do |category,ingredients|
+			if ingredients.class.to_s != "Hash" then next end
+			ingredients.each do |ingredient,quantity|
+				ingredient = $page.ingredientWithName(ingredient)
+				ingredient.addQuantity(quantity)
+				ingredient.addCategory(category)
 				array.push(ingredient)
 			end
 		end
@@ -38,7 +36,9 @@ class Recipe
 
 	def instructions
 
-		text = @data["INST"].to_s.force_encoding("UTF-8")
+		text = @data["INST"]
+
+		return text
 
 		# Add ingredients highlights
 
@@ -89,7 +89,7 @@ class Recipe
 	end
 
 	def description
-		return @data["DESC"].to_s.force_encoding("UTF-8")
+		return @data["DESC"].runes
 	end
 
 	def description_short
@@ -97,6 +97,7 @@ class Recipe
 	end
 
 	def colors
+		return []
 		array = []
 		used = {}
 		ingredients.each do |ingredient|
@@ -208,10 +209,10 @@ class Recipe
 	    # List them
 
 	    instructions.each do |instruction|
-	      if instruction[0,1] == "="
-	        html += "</ul><h2>"+instruction.gsub("=","")+"</h2><ul>"
+	      if instruction[0,1] == "*"
+	        html += "</ul><h2>"+instruction.gsub("*","").strip+"</h2><ul>"
 	      elsif instruction.length > 4
-	        html += "<li itemprop='recipeInstructions'>#{instruction}</li>"
+	        html += "<li itemprop='recipeInstructions'>#{instruction.sub("- ","").strip}</li>"
 	      end
 	    end
 
@@ -254,8 +255,7 @@ class Recipe
 	end
 
 	def template_photo
-		return "[PHOTO]"
-		return "<content class='photo'><a href='/#{url}'><img src='/img/recipes/#{id}.jpg' itemprop='image'/></a></content>"
+		return "<content class='photo'><a href='/#{url}'><img src='/img/recipes/#{title.gsub(" ",".").downcase}.jpg' itemprop='image'/></a></content>"
 	end
 
 	def template_facebook

@@ -56,10 +56,10 @@ class Page
 	def timeline
 
 		array = []
-		@recipes.sort.reverse.each do |name,recipe|
+		@recipes.each do |name,recipe|
 			array.push(recipe)
 		end
-		return array
+		return array.reverse
 
 	end
 

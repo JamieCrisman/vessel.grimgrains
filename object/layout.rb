@@ -59,10 +59,9 @@ class Layouts
     html += "<ul class='menu'>"
     html += "<li class='head'>Nutrition facts</li>"
 
-    # $page.customs.each do |custom|
-    #   if custom.isMenu.to_i < 1 then next end
-    #   html += "<li class='subs'><a href='/#{custom.url}'>#{custom.title}</a></li>"
-    # end
+    $page.customs.each do |name,content|
+      html += "<li class='subs'><a href='/#{name.gsub(" ",".").downcase}'>#{name.capitalize}</a></li>"
+    end
 
     limit = 0
     tags.sort_by {|_key, value| value}.reverse.each do |k,v|
@@ -164,7 +163,7 @@ class Layouts
     html += recipeObject.template_tags 
     html += commentDisqus
     similarRecipes = $page.similarRecipesToName($page.isRecipe.title)
-    if similarRecipes
+    if similarRecipes.length > 1
       html += "<content class='similar'>"+similarRecipes.first.template_similar+" "+similarRecipes[1].template_similar+"</content>"
     end
     html += "</div>"
@@ -180,7 +179,7 @@ class Layouts
     html += ingredientObject.template_badge
     if assocRecipes.length > 0 then html += "<h1>Found #{assocRecipes.length} recipes with #{ingredientObject.name}</h1>" end
     count = 0
-    assocRecipes.each do |name,recipe|
+    assocRecipes.each do |recipe|
       if count > 10 then break end
       html += recipe.template_preview
       count += 1
@@ -211,7 +210,7 @@ class Layouts
     html = "<h1>#{tagString} Recipes</h1>"
     assocRecipes = $page.recipesWithTag(tagString)
     count = 0
-    assocRecipes.each do |name,recipe|
+    assocRecipes.each do |recipe|
       if count > 10 then break end
       html += recipe.template_preview
       count += 1
@@ -302,7 +301,7 @@ class Layouts
 
   def view_custom
 
-    return $page.content_custom
+    return $page.content_custom.markup
     
   end
 

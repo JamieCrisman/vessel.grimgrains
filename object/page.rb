@@ -43,7 +43,7 @@ class Page
 
 	def customs
 
-		return @customs
+		return @custom
 
 	end
 
@@ -129,7 +129,8 @@ class Page
 
 	def content_custom
 
-		return "<p>"+@custom[$page.query.upcase]["BREF"]+"</p>"+@custom[$page.query.upcase]["LONG"].parse2
+
+		return "<p>"+@custom[$page.query.upcase]["BREF"]+"</p>"+(@custom[$page.query.upcase]["LONG"] ? @custom[$page.query.upcase]["LONG"].runes : "")
 
 	end
 
@@ -215,7 +216,7 @@ class Page
 
 	    @recipes.each do |name,recipe|
 
-	    	if recipe.title == currentRecipe.title then next end
+	    	if recipe.title.downcase == currentRecipe.title.downcase then next end
 
 	    	similarPoints[recipe.title] = 0
 
@@ -237,9 +238,10 @@ class Page
 	    # Get recipes
 
 	    similarOrdered = similarPoints.sort_by {|_key, value| value}.reverse
+
 	    array = []
-	    similarOrdered.each do |id,value|
-	    	array.push(recipeWithName(query))
+	    similarOrdered.each do |name,value|
+	    	array.push(recipeWithName(name))
 	    end
 
 	    return array

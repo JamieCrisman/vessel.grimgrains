@@ -19,6 +19,8 @@ class Recipe
 	def ingredients
 
 		array = []
+		if !@data["INGR"] then return [] end
+			
 		ingredientCategory = "main"
 
 		@data["INGR"].each do |category,ingredients|

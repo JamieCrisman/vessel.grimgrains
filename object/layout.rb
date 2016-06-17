@@ -196,7 +196,7 @@ class Layouts
 
     assocRecipes = $page.recipesWithColor(colorObject)
     count = 0
-    assocRecipes.each do |name,recipe|
+    assocRecipes.each do |recipe|
       if count > 10 then break end
       html += recipe.template_preview
       count += 1

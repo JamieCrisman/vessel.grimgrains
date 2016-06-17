@@ -92,6 +92,7 @@ class Recipe
 	end
 
 	def description
+		if !@data["DESC"] then return "" end
 		return @data["DESC"].runes
 	end
 

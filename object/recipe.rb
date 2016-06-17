@@ -24,7 +24,6 @@ class Recipe
 		ingredientCategory = "main"
 
 		@data["INGR"].each do |category,ingredients|
-			if ingredients.class.to_s != "Hash" then puts "Issue with: #{title} #{category}/#{ingredients}<br />" ; next end
 			ingredients.each do |ingredient,quantity|
 				ingredient = $page.ingredientWithName(ingredient)
 				if !ingredient then next end
@@ -191,17 +190,14 @@ class Recipe
 
 		html = ""
 		categories = {}
-
-		ingredients.each do |ingredient|
-			if !categories[ingredient.category] then categories[ingredient.category] = [] end
-			categories[ingredient.category].push(ingredient)
-	  	end
-	  	categories.each do |category,ingredients2|
-	  		html += category.like("main") ? "" : "<h3>#{category.capitalize}</h3>"
-	  		ingredients2.each do |ingredient|
-	  			html += ingredient.template
-	  		end
-	  	end
+		@data["INGR"].each do |category,ingredients|
+			html += category.like("main") ? "" : "<h3>#{category.capitalize}</h3>"
+			ingredients.each do |ingredient,quantity|
+				ingredient = $page.ingredientWithName(ingredient)
+				ingredient.addQuantity(quantity)
+				html += ingredient.template
+			end
+		end
 	  	return "<content class='ingredients'>"+html+"</content>"
 
 	end

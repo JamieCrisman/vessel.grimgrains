@@ -194,6 +194,7 @@ class Recipe
 			html += category.like("main") ? "" : "<h3>#{category.capitalize}</h3>"
 			ingredients.each do |ingredient,quantity|
 				ingredient = $page.ingredientWithName(ingredient)
+				if ingredient == nil then next end
 				ingredient.addQuantity(quantity)
 				html += ingredient.template
 			end

@@ -164,7 +164,7 @@ class Recipe
 		    </h1>
 			#{template_colors}
 		    <content class='description'>#{description}</content>
-		</content>"
+		</content>".markup
 
 	end
 
@@ -182,7 +182,7 @@ class Recipe
 		    </h1>
 			#{template_colors}
 		    <content class='description preview'>#{description_short}</content>
-		</content>"
+		</content>".markup
 
 	end
 
@@ -199,7 +199,7 @@ class Recipe
 				html += ingredient.template
 			end
 		end
-	  	return "<content class='ingredients'>"+html+"</content>"
+	  	return "<content class='ingredients'>"+html.markup+"</content>"
 
 	end
 
@@ -218,7 +218,7 @@ class Recipe
 	      end
 	    end
 
-	    return "<content class='instructions'><ul>"+html+"</ul></content>"
+	    return "<content class='instructions'><ul>"+html.markup+"</ul></content>"
 
 	end
 

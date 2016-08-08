@@ -29,9 +29,9 @@ class Grim
 
 		data = {
 			"search"  => @search,
-			"ingredients" => $jiin.command("grid grim.ingredients"),
-			"recipes" => $jiin.command("grid grim.recipes"),
-			"custom" => $jiin.command("grid grim.custom")
+			"ingredients" => $jiin.command("grid grim.ingredients").to_h,
+			"recipes" => $jiin.command("grid grim.recipes").to_h,
+			"custom" => $jiin.command("grid grim.custom").to_h
 		}
 
 		$page = Page.new(data)

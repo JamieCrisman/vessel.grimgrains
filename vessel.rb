@@ -8,17 +8,13 @@ require_relative "object/custom.rb"
 require_relative "object/layout.rb"
 require_relative "object/recipe.rb"
 
-class Grim
+class Grimg
 
-	include Lamp
+	include Vessel
 
-	def initialize query
+	def http q = "Home"
 
-	end
-
-	def application query
-
-		@searchRaw = query.to_s.gsub("-"," ")
+		@searchRaw = q.to_s.gsub("-"," ")
 		@search = @searchRaw
 		@module = @searchRaw
 
@@ -29,15 +25,15 @@ class Grim
 
 		data = {
 			"search"  => @search,
-			"ingredients" => $jiin.command("grid grim.ingredients").to_h,
-			"recipes" => $jiin.command("grid grim.recipes").to_h,
-			"custom" => $jiin.command("grid grim.custom").to_h
+			"ingredients" => En.new("grim.ingredients").to_h,
+			"recipes" => En.new("grim.recipes").to_h,
+			"custom" => En.new("grim.custom").to_h
 		}
 
 		$page = Page.new(data)
 		layout = Layouts.new(@search,@module)
 
-		puts "
+		return "
 		<!DOCTYPE html>
 		<html> 
 			<head>

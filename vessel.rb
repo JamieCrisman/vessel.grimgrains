@@ -10,7 +10,11 @@ require_relative "object/recipe.rb"
 
 class Grimg
 
-  include Vessel
+  class Corpse
+
+    include CorpseHttp
+
+  end
 
   class Actions
 
@@ -37,43 +41,35 @@ class Grimg
       $page = Page.new(data)
       layout = Layouts.new(@search,@module)
 
-      return "
-<!DOCTYPE html>
-<html> 
-  <head>
-  <meta charset='UTF-8'>
-  <meta property='og:GrimGrains' content='grimgrains.com' />
-  <meta name='description' content='Grim Grains is a vegan food blog featuring over a hundred colourful, healthy, nut-free, and experimental recipes.'/>
+      # Corpse
+      
+      corpse = Corpse.new
+      
+      corpse.add_meta("description","Grim Grains is a vegan food blog featuring over a hundred colourful, healthy, nut-free, and experimental recipes.")
+      corpse.add_meta("keywords","sailing, patreon, indie games, design, liveaboard")
+      corpse.add_meta("viewport","width=device-width, initial-scale=1, maximum-scale=1")
+      corpse.add_meta("apple-mobile-web-app-capable","yes")
 
-  <link rel='apple-touch-icon-precomposed'   href='../../img/interface/phone_xxiivv.png'/>
-  <link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
-  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js' ></script>
-  <link rel='shortcut icon' href='http://grimgrains.com/favicon.ico' />
-  <link href='http://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+      corpse.add_link("http://fonts.googleapis.com/css?family=Abel")
+      corpse.add_link("http://fonts.googleapis.com/css?family=Amatic+SC")
 
-  <link rel='stylesheet'           type='text/css'                 href='inc/style.reset.css?v=1' />
-  <link rel='stylesheet'           type='text/css'                 href='inc/style.main.css?v=1' />
-  <script                              src='inc/jquery.main.js?v=1'></script>
+      corpse.add_link("style.reset.css")
+      corpse.add_link("style.main.css")
 
-  <title>Grimgrains | #{$page.title}</title>
+      corpse.add_link("shortcut icon","","http://grimgrains.com/favicon.ico")
+      
+      corpse.add_script("jquery.core.js")
+      corpse.add_script("jquery.main.js")
+      
+      corpse.set_title("Grimgrains | #{$page.title}")
+      corpse.set_body(layout.view)
 
-  <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-53987113-1', 'auto');
-  ga('send', 'pageview');
-  </script>
-
-</head>
-<body>"+layout.view+"</body>
-"+layout.googleAnalytics+"
-"+layout.sharePinterestSDK+"
-"+layout.shareFacebookSDK+"
-"+layout.googleAdsSDK+"
-</html>"
+      corpse.set_foot(layout.googleAnalytics)
+      corpse.set_foot(layout.sharePinterestSDK)
+      corpse.set_foot(layout.shareFacebookSDK)
+      corpse.set_foot(layout.googleAdsSDK)
+      
+      return corpse.result
 
     end
 

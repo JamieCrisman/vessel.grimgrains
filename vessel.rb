@@ -64,10 +64,10 @@ class Grimg
       corpse.set_title("Grimgrains | #{$page.title}")
       corpse.set_body(layout.view)
 
-      corpse.set_foot(layout.googleAnalytics)
-      corpse.set_foot(layout.sharePinterestSDK)
-      corpse.set_foot(layout.shareFacebookSDK)
-      corpse.set_foot(layout.googleAdsSDK)
+      corpse.add_footer(layout.googleAnalytics)
+      corpse.add_footer(layout.sharePinterestSDK)
+      corpse.add_footer(layout.shareFacebookSDK)
+      corpse.add_footer(layout.googleAdsSDK)
       
       return corpse.result
 

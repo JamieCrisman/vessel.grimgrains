@@ -16,11 +16,11 @@ class Grimg
 
   end
 
-  class Actions
+  class PassiveActions
 
     include ActionCollection
 
-    def http q = "Home"
+    def answer q = "Home"
 
       @searchRaw = q.to_s.gsub("-"," ")
       @search = @searchRaw
@@ -75,6 +75,6 @@ class Grimg
 
   end
 
-  def actions ; return Actions.new(self,self) end
+  def passive_actions ; return PassiveActions.new(self,self) end
 
 end

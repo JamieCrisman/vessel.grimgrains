@@ -62,7 +62,7 @@ class Grimg
       corpse.add_script("jquery.main.js")
       
       corpse.set_title("Grimgrains | #{$page.title}")
-      corpse.set_body(layout.view)
+      corpse.set_view(layout.view)
 
       corpse.add_footer(layout.googleAnalytics)
       corpse.add_footer(layout.sharePinterestSDK)

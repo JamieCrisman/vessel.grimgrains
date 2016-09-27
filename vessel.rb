@@ -22,6 +22,8 @@ class Grimg
 
     def answer q = "Home"
 
+      path = File.expand_path(File.join(File.dirname(__FILE__), "/"))
+
       @searchRaw = q.to_s.gsub("-"," ")
       @search = @searchRaw
       @module = @searchRaw
@@ -33,9 +35,9 @@ class Grimg
 
       data = {
         "search"  => @search,
-        "ingredients" => En.new("grim.ingredients").to_h,
-        "recipes" => En.new("grim.recipes").to_h,
-        "custom" => En.new("grim.custom").to_h
+        "ingredients" => En.new("grim.ingredients",path).to_h,
+        "recipes" => En.new("grim.recipes",path).to_h,
+        "custom" => En.new("grim.custom",path).to_h
       }
 
       $page = Page.new(data)

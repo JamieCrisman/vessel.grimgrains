@@ -59,9 +59,9 @@ class Layouts
     html += "<ul class='menu'>"
     html += "<li class='head'>Nutrition facts</li>"
 
-    $page.customs.each do |name,content|
-      html += "<li class='subs'><a href='/#{name.gsub(" ",".").downcase}'>#{name.capitalize}</a></li>"
-    end
+    # $page.customs.each do |name,content|
+    #   html += "<li class='subs'><a href='/#{name.gsub(" ",".").downcase}'>#{name.capitalize}</a></li>"
+    # end
 
     limit = 0
     tags.sort_by {|_key, value| value}.reverse.each do |k,v|

@@ -6,15 +6,9 @@ class Page
 	def initialize data
 
 		@search = data["search"].force_encoding("UTF-8")
-		@ingredients = {}
-	    data["ingredients"].each do |name,content|
-			@ingredients[name] = Ingredient.new(name,content)
-		end
-		@recipes = {}
-	    data["recipes"].each do |name,content|
-			@recipes[name] = Recipe.new(name,content)
-		end
-	    @custom = data["custom"]
+		@ingredients = data["ingredients"].to_h("ingredient")
+		@recipes = data["recipes"].to_h("recipe")
+	  # @custom = data["custom"].to_h("custom")
 
 	end
 
@@ -27,6 +21,7 @@ class Page
 	def title
 
 		return @search
+
 	end
 
 	def recipes
@@ -123,12 +118,12 @@ class Page
 
 	def isCustom
 
+		return false #TODO
 		return @custom[$page.query.upcase] ? true : false
 
 	end
 
 	def content_custom
-
 
 		return "<p>"+@custom[$page.query.upcase]["BREF"]+"</p>"+(@custom[$page.query.upcase]["LONG"] ? @custom[$page.query.upcase]["LONG"].runes : "")
 

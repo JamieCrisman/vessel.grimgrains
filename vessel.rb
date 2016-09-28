@@ -35,9 +35,9 @@ class Grimg
 
       data = {
         "search"  => @search,
-        "ingredients" => En.new("grim.ingredients",path).to_h,
-        "recipes" => En.new("grim.recipes",path).to_h,
-        "custom" => En.new("grim.custom",path).to_h
+        "ingredients" => En.new("grim.ingredients",path),
+        "recipes" => En.new("grim.recipes",path),
+        "custom" => En.new("grim.custom",path)
       }
 
       $page = Page.new(data)
@@ -63,8 +63,8 @@ class Grimg
       corpse.add_script("jquery.core.js")
       corpse.add_script("jquery.main.js")
       
-      corpse.set_title("Grimgrains | #{$page.title}")
-      corpse.set_view(layout.view)
+      corpse.title = "Grimgrains | #{$page.title}"
+      corpse.body  = layout.view
 
       corpse.add_footer(layout.googleAnalytics)
       corpse.add_footer(layout.sharePinterestSDK)

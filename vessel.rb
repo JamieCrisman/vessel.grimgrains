@@ -1,7 +1,7 @@
 #!/bin/env ruby
 # encoding: utf-8
 
-$nataniev.require("corpses","http")
+$nataniev.require("corpse","http")
 
 require_relative "object/page.rb"
 require_relative "object/ingredient.rb"
@@ -10,7 +10,7 @@ require_relative "object/custom.rb"
 require_relative "object/layout.rb"
 require_relative "object/recipe.rb"
 
-class Grimg
+class Grimgrains
 
   include Vessel
   

@@ -1,6 +1,8 @@
 #!/bin/env ruby
 # encoding: utf-8
 
+$nataniev.require("corpses","http")
+
 require_relative "object/page.rb"
 require_relative "object/ingredient.rb"
 require_relative "object/color.rb"
@@ -10,17 +12,19 @@ require_relative "object/recipe.rb"
 
 class Grimg
 
+  include Vessel
+  
   class Corpse
 
     include CorpseHttp
 
   end
 
-  class PassiveActions
+  class Actions
 
     include ActionCollection
 
-    def answer q = "Home"
+    def serve q = "Home"
 
       path = File.expand_path(File.join(File.dirname(__FILE__), "/"))
 
@@ -35,9 +39,9 @@ class Grimg
 
       data = {
         "search"  => @search,
-        "ingredients" => En.new("grim.ingredients",path),
-        "recipes" => En.new("grim.recipes",path),
-        "custom" => En.new("grim.custom",path)
+        "ingredients" => Memory_Hash.new("grim.ingredients",path),
+        "recipes" => Memory_Hash.new("grim.recipes",path),
+        "custom" => Memory_Hash.new("grim.custom",path)
       }
 
       $page = Page.new(data)
@@ -77,6 +81,6 @@ class Grimg
 
   end
 
-  def passive_actions ; return PassiveActions.new(self,self) end
+  def actions ; return Actions.new(self,self) end
 
 end

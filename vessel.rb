@@ -56,7 +56,7 @@ class ActionServe
 
     # Corpse
     
-    corpse = CorpseHttp.new(@host,@query)
+    corpse = CorpseHttp.new(@host,@search)
     
     corpse.title = "Grimgrains | #{$page.title}"
     corpse.body  = layout.view

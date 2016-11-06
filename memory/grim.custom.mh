@@ -6,10 +6,10 @@ ABOUT
   BREF : We started {*Grim Grains*} once we realized food could be artistically fulfilling. Cooking became an creative output, while the blog allowed us to document our progress and keep track of the things we made. The blog is about being artistically creative with food and colour. Colours for added nutrition, for contrast and for visual harmony. Most of my recipes are also nut-free and plant-based.
   LONG
     & This custom built website showcases our favourite creations with hand draw illustrations for {{each of their ingredients|ingredients-list}}.
-    % img/pages/about.main.jpg
+    % about.main
     & We are {{Rekka Bellum|http://kokorobot.ca/}} & {{Devine Lu Linvega|http://xxiivv.com}}, an illustrator and a developer, living on a small sailboat on the shores of the Pacific Ocean. 
     & You can contact Rekka at {{rekkabell@gmail.com|mailto:rekkabell@gmail.com}} or directly on my twitter {{@grimgrains}}.
-    % img/pages/about.boat.jpg
+    % about.boat
 
 INGREDIENTS
   BREF : Here is an unsorted list of all the ingredients used in GrimGrains recipes! 
@@ -20,7 +20,6 @@ DISCLAIMER
   BREF : The content of grimgrains.com, unless stated otherwise, is © Rekka Bell. All rights reserved. Photographs, drawings or text should not be used, published, reprinted or modified without my permission.
   LONG
     * Copyright policy
-    & 
     & You may adapt one of my grim creations, but be sure to link back to the original recipe and to give proper credit.
     & Opinions expressed by any third parties are theirs and do not reflect my own.
     * Disclaimer

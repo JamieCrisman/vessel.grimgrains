@@ -3,12 +3,14 @@
 
 class Page
 
+	attr_accessor :custom
+
 	def initialize data
 
 		@search = data["search"].force_encoding("UTF-8")
 		@ingredients = data["ingredients"].to_h("ingredient")
 		@recipes = data["recipes"].to_h("recipe")
-	  # @custom = data["custom"].to_h("custom")
+	  @custom = data["custom"].to_h
 
 	end
 
@@ -84,6 +86,12 @@ class Page
 			if ingredient.color.value.downcase == @search.downcase then return ingredient.color end
 		end
 		return false
+
+	end
+
+	def isCustom
+
+		if query.like("About") then return true end
 
 	end
 

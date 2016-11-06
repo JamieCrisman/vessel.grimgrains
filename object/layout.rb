@@ -58,10 +58,9 @@ class Layouts
 
     html += "<ul class='menu'>"
     html += "<li class='head'>Nutrition facts</li>"
-
-    # $page.customs.each do |name,content|
-    #   html += "<li class='subs'><a href='/#{name.gsub(" ",".").downcase}'>#{name.capitalize}</a></li>"
-    # end
+    html += "<li class='subs'><a href='/About'>About</a></li>"
+    html += "<li class='subs'><a href='/Ingredients'>Ingredients</a></li>"
+    html += "<li class='subs'><a href='/Disclaimer'>Disclaimer</a></li>"
 
     limit = 0
     tags.sort_by {|_key, value| value}.reverse.each do |k,v|
@@ -121,8 +120,10 @@ class Layouts
       html = recipe($page.isRecipe)
     elsif $page.isIngredientList
       html = ingredientsList
-    elsif $page.isCustom
-      html = view_custom
+    elsif @search.like("about")
+      html = view_about
+    elsif @search.like("disclaimer")
+      html = view_disclaimer
     elsif $page.isIngredient
       html = ingredient($page.isIngredient)
     elsif $page.isColor
@@ -139,15 +140,11 @@ class Layouts
 
     return "<wrapper style='min-height:900px'>"+sidebar.force_encoding("utf-8")+"<core>
 
-
-
     <!-- //////////////////////////////////////// --!>
 
     "+html.force_encoding("utf-8")+"
 
     <!-- //////////////////////////////////////// --!>
-
-
 
     </core><hr /></wrapper>"+footer.force_encoding("utf-8")
 
@@ -228,7 +225,7 @@ class Layouts
 
   def ingredientsList
 
-    html = ""
+    html = "<h1>Ingredients List</h1>"
     sort_by_color = {}
 
     $page.ingredients.each do |name,ingredient|
@@ -298,10 +295,22 @@ class Layouts
 
   end
 
-  def view_custom
+  def view_about
 
-    return $page.content_custom.markup
-    
+    html = "<h1>About</h1>"
+    html += "<p>"+$page.custom['ABOUT']['BREF'].markup+"</p>"
+    html += $page.custom['ABOUT']['LONG'].runes("custom")
+    return html
+
+  end
+
+  def view_disclaimer
+
+    html = "<h1>Disclaimer</h1>"
+    html += "<p>"+$page.custom['DISCLAIMER']['BREF'].markup+"</p>"
+    html += $page.custom['DISCLAIMER']['LONG'].runes("custom")
+    return html
+
   end
 
   def googleAnalytics

@@ -157,8 +157,6 @@ class Recipe
 		    #{template_photo}
 		    <h1 itemprop='name'><a href='/#{url}'>#{title}</a> 
 				<small>#{duration} minutes</small>
-				<div class='right social'>#{template_facebook}</div>
-				<div class='right social'>#{template_pinterest}</div>
 				<meta itemprop='prepTime' content='PT#{duration}M'>
 				<meta itemprop='totalTime' content='PT#{duration}M'>
 		    </h1>
@@ -175,8 +173,6 @@ class Recipe
 		    #{template_photo}
 		    <h1 itemprop='name'><a href='/#{url}'>#{title}</a> 
 				<small>#{duration} minutes</small>
-				<div class='right social'>#{template_facebook}</div>
-				<div class='right social'>#{template_pinterest}</div>
 				<meta itemprop='prepTime' content='PT#{duration}M'>
 				<meta itemprop='totalTime' content='PT#{duration}M'>
 		    </h1>
@@ -258,14 +254,6 @@ class Recipe
 
 	def template_photo
 		return "<content class='photo'><a href='/#{url}'><img src='/img/recipes/#{title.gsub(" ",".").downcase}.jpg' itemprop='image'/></a></content>"
-	end
-
-	def template_facebook
-		return '<div class="fb-like" data-href="http://grimgrains.com/'+url+'" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>'
-	end
-
-	def template_pinterest
-		return '<a href="//www.pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" ><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>'
 	end
 
 end

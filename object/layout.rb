@@ -161,7 +161,6 @@ class Layouts
     html += recipeObject.template_ingredients
     html += recipeObject.template_instructions 
     html += recipeObject.template_tags 
-    html += commentDisqus
     similarRecipes = $page.similarRecipesToName($page.isRecipe.title)
     if similarRecipes.length > 1
       html += "<content class='similar'>"+similarRecipes.first.template_similar+" "+similarRecipes[1].template_similar+"</content>"
@@ -477,20 +476,5 @@ class Layouts
     return '<a href="https://twitter.com/share" class="twitter-share-button" data-text="Try this deliciously dark Grim Grains recipe!" data-via="RekkaBell" data-hashtags="grimgrains">Tweet</a>'
 
   end
-  
-  def commentDisqus
-    
-    return "<div id='disqus_thread'></div>
-    <script type='text/javascript'>
-        var disqus_shortname = 'grimgrains'; // required: replace example with your forum shortname
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>"
-    
-  end
 
 end
-

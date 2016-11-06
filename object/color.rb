@@ -17,7 +17,9 @@ class Color
 	end
 
 	def template
+
 		return "<a class='color' style='background-color:##{value}' href='/#{value}'></a>"
+		
 	end
 
 end

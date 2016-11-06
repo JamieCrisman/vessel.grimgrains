@@ -46,12 +46,15 @@ class Custom
 	end
 
 	def isMenu
+		
 		return @data[4].to_i
+
 	end
 
 	def template
 
 		return "#{content}"
+
 	end
 
 end

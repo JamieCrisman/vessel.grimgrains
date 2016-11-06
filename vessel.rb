@@ -13,8 +13,10 @@ class VesselGrimgrains
 
     @name = "Grim Grains"
     @path = File.expand_path(File.join(File.dirname(__FILE__), "/"))
+    @media_path = "/var/www/client.grim/media"
 
     install(:default,:serve)
+    $vessel = self
 
   end
 

@@ -92,7 +92,7 @@ class Recipe
 
 	def description
 		if !@data["DESC"] then return "" end
-		return @data["DESC"].runes
+		return @data["DESC"].runes("recipes")
 	end
 
 	def description_short
@@ -170,7 +170,7 @@ class Recipe
 
 	   return "
 	    <content class='recipe'>
-		    #{template_photo}
+		    <a href='#{url}'>#{template_photo}</a>
 		    <h1 itemprop='name'><a href='/#{url}'>#{title}</a> 
 				<small>#{duration} minutes</small>
 				<meta itemprop='prepTime' content='PT#{duration}M'>
@@ -231,7 +231,7 @@ class Recipe
 	def template_similar
 
 	    return "<content class='recipe'>
-	    	#{template_photo}
+	    	<a href='#{url}'>#{template_photo}</a>
 	    	<h1 itemprop='name'><a href='/#{url}'>#{title}</a></h1>
 	    	#{template_tags}
 	    </content>"
@@ -253,6 +253,8 @@ class Recipe
 	end
 
 	def template_photo
+		media = Media.new("recipes",title)
+		return media
 		return "<content class='photo'><a href='/#{url}'><img src='/img/recipes/#{title.gsub(" ",".").downcase}.jpg' itemprop='image'/></a></content>"
 	end
 

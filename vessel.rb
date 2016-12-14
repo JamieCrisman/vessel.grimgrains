@@ -11,11 +11,10 @@ class VesselGrimgrains
 
     super
 
-    @name = "Grim Grains"
+    @name = "GrimGrains"
     @path = File.expand_path(File.join(File.dirname(__FILE__), "/"))
-    @media_path = "/var/www/client.grim/media"
 
-    install(:default,:serve)
+    install(:custom,:serve)
     $vessel = self
 
   end
@@ -64,9 +63,9 @@ class ActionServe
     corpse.body  = layout.view
 
     corpse.add_footer(layout.googleAnalytics)
-    corpse.add_footer(layout.sharePinterestSDK)
-    corpse.add_footer(layout.shareFacebookSDK)
-    corpse.add_footer(layout.googleAdsSDK)
+    # corpse.add_footer(layout.sharePinterestSDK)
+    # corpse.add_footer(layout.shareFacebookSDK)
+    # corpse.add_footer(layout.googleAdsSDK)
     
     return corpse.result
 

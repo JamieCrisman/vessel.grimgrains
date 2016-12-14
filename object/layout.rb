@@ -14,7 +14,7 @@ class Layouts
 
     html = ""
 
-    html += "<a href='/' class='logo'><img src='/img/interface/grim.grains.logo.png'/></a>"
+    html += "<a href='/Home' class='logo'>#{Media.new("interface","logo")}</a>"
 
     html += formatSidebarSocial
     html += "<center style='margin-bottom:30px'>Dark plant-based and nut-free cookery.</center>"
@@ -90,11 +90,11 @@ class Layouts
 
     html = ""
 
-    html += "<a href='https://www.facebook.com/grimgrains'><img src='img/interface/social/facebook.png'/></a>"
-    html += "<a href='http://grimgrains.tumblr.com'><img src='img/interface/social/tumblr.png'/></a>"
-    html += "<a href='https://twitter.com/grimgrains'><img src='img/interface/social/twitter.png'/></a>"
-    html += "<a href='http://www.pinterest.com/rekkabellum/'><img src='img/interface/social/pinterest.png'/></a>"
-    html += "<a href='http://www.instagram.com/grimgrains/'><img src='img/interface/social/instagram.png'/></a>"
+    html += "<a href='https://www.facebook.com/grimgrains'>#{Media.new("interface","facebook")}</a>"
+    html += "<a href='http://grimgrains.tumblr.com'>#{Media.new("interface","tumblr")}</a>"
+    html += "<a href='https://twitter.com/grimgrains'>#{Media.new("interface","twitter")}</a>"
+    html += "<a href='http://www.pinterest.com/rekkabellum/'>#{Media.new("interface","pinterest")}</a>"
+    html += "<a href='http://www.instagram.com/grimgrains/'>#{Media.new("interface","instagram")}</a>"
 
     return "<content class='social'>"+html+"</content>"
 
@@ -154,10 +154,10 @@ class Layouts
 
     html =  ""
     html += "<div itemscope itemtype='http://schema.org/Recipe'>"
-    html += recipeObject.template_overview 
+    html += recipeObject.template_overview
     html += recipeObject.template_ingredients
-    html += recipeObject.template_instructions 
-    html += recipeObject.template_tags 
+    html += recipeObject.template_instructions
+    html += recipeObject.template_tags
     similarRecipes = $page.similarRecipesToName($page.isRecipe.title)
     if similarRecipes.length > 1
       html += "<content class='similar'>"+similarRecipes.first.template_similar+" "+similarRecipes[1].template_similar+"</content>"
@@ -299,7 +299,7 @@ class Layouts
 
     html = "<h1>About</h1>"
     html += "<p>"+$page.custom['ABOUT']['BREF'].markup+"</p>"
-    html += $page.custom['ABOUT']['LONG'].runes("custom")
+    html += $page.custom['ABOUT']['LONG'].runes("pages")
     return html
 
   end
@@ -308,7 +308,7 @@ class Layouts
 
     html = "<h1>Disclaimer</h1>"
     html += "<p>"+$page.custom['DISCLAIMER']['BREF'].markup+"</p>"
-    html += $page.custom['DISCLAIMER']['LONG'].runes("custom")
+    html += $page.custom['DISCLAIMER']['LONG'].runes("pages")
     return html
 
   end
@@ -362,7 +362,7 @@ class Layouts
   def widgetInstagram
    
     return '
-    <h1 class="center">Latest instagram snaps</h1><iframe src="http://snapwidget.com/in/?u=Z3JpbWdyYWluc3xpbnwxNDV8MnwyfHxub3w1fG5vbmV8b25TdGFydHx5ZXN8bm8=&ve=270814" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:300px; height:300px"></iframe>'  
+    <h1 class="center">Latest instagram snaps</h1><iframe src="http://snapwidget.com/in/?u=Z3JpbWdyYWluc3xpbnwxNDV8MnwyfHxub3w1fG5vbmV8b25TdGFydHx5ZXN8bm8=&ve=270814" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:300px; height:300px"></iframe>'
     
   end
 

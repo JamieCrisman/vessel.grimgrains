@@ -15,7 +15,6 @@ class VesselGrimgrains
     @path = File.expand_path(File.join(File.dirname(__FILE__), "/"))
 
     install(:custom,:serve)
-    $vessel = self
 
   end
 
@@ -60,7 +59,7 @@ class ActionServe
     corpse = CorpseHttp.new(@host,@search)
     
     corpse.title = "Grimgrains | #{$page.title}"
-    corpse.body  = layout.view
+    corpse.layout = layout
 
     corpse.add_footer(layout.googleAnalytics)
     # corpse.add_footer(layout.sharePinterestSDK)
@@ -75,6 +74,8 @@ end
 
 class CorpseHttp
 
+  attr_accessor :layout
+  
   def build
 
     add_meta("description","Grim Grains is a vegan food blog featuring over a hundred colourful, healthy, nut-free, and experimental recipes.")
@@ -93,6 +94,18 @@ class CorpseHttp
     add_script("jquery.core.js")
     add_script("jquery.main.js")
 
+  end
+  
+  def body
+    
+    return layout.view
+    
+  end
+  
+  def view
+    
+    return ""
+    
   end
 
 end

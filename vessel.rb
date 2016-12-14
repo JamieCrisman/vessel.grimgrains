@@ -98,7 +98,7 @@ class CorpseHttp
   
   def body
     
-    return layout.view
+    return @layout.view
     
   end
   

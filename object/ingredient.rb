@@ -44,10 +44,10 @@ class Ingredient
 	def template
 
 		html = ""
-	    if File.exist?("img/ingredients/#{file}.png")
-	      html += "<img src='/img/ingredients/#{file}.png'/>"
+	    if File.exist?("public.grimgrains/media/ingredients/#{file}.png")
+	      html += "<img src='public.grimgrains/media/ingredients/#{file}.png'/>"
 	    else
-	      html += "<img src='/img/ingredients/missing.png'/>"
+	      html += "<img src='public.grimgrains/media/ingredients/missing.png'/>"
 	    end
 	    html += "<name itemprop='ingredients'>#{name}<small>#{@quantity}</small></name>"
 	    return "<content class='ingredient'><a href='/#{url}'></a>"+html+"</content>"
